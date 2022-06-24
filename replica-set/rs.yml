@@ -1,0 +1,25 @@
+## Replica Set Defination
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: RS-frontend
+  labels:
+    app: guest
+    tier: f-end
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: guest
+      tier: f-end
+  template:
+     metadata:
+        labels:
+           name: redis-pod
+           app: guest
+           tier: f-end
+     spec:
+        containers:
+          - name: redis-pod
+            image: redis

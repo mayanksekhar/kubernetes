@@ -1,0 +1,14 @@
+## Pod defination to Support RS
+
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    app: guest
+    tier: f-end
+  name: redis-pod
+spec:
+  containers:
+  - name: redis-pod
+    image: redis
