@@ -1,0 +1,38 @@
+api Version: v1
+kind: Namespace
+metadata:
+ name: goats
+----------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-bonial
+  namespace: goats
+spec:
+  selector:
+    app: bonial
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+ ---------------------
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: bonial
+  namespace: goats
+spec:
+  maxReplicas: 5
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cinemo-backend
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
